@@ -1,15 +1,18 @@
 const container = document.querySelector("#container");
 
+function createGrid(squaresPerSide) {
+  let size = 640 / squaresPerSide;
 
-for (let i = 0; i < 256; i++) {
-  const singleDiv = document.createElement("div");
-  singleDiv.classList.add("single");
-  container.appendChild(singleDiv);
-
-  singleDiv.addEventListener('mouseenter', (e) => {
-    e.target.style.backgroundColor = "red";
-  })
+  for (let i = 0; i < (squaresPerSide * squaresPerSide); i++) {
+    const singleDiv = document.createElement("div");
+    singleDiv.classList.add("single");
+    container.appendChild(singleDiv)
+    singleDiv.style.width = singleDiv.style.height = size + "px";
+    singleDiv.addEventListener("mouseenter", (e) => e.target.style.backgroundColor = "yellow");
+  }
 }
+
+createGrid(16);
 
 const clearButton = document.querySelector("#clearButton");
 clearButton.addEventListener('click', () => {
@@ -18,19 +21,8 @@ clearButton.addEventListener('click', () => {
     alert("Too big, try another.");
   } else {
     container.innerHTML = '';
-
-    for (let i = 0; i < userInput * userInput; i++) {
-      const singleDiv = document.createElement("div");
-      singleDiv.classList.add("single");
-      container.appendChild(singleDiv);
-      let gridSize = parseInt(userInput);
-      let size = 640 / gridSize;
-      singleDiv.style.width = size + "px";
-      singleDiv.style.height = size + "px";
-
-      singleDiv.addEventListener('mouseenter', (e) => {
-        e.target.style.backgroundColor = "red";
-      })
-    }
+    let gridSize = parseInt(userInput);
+    createGrid(gridSize);
   }
 })
+
